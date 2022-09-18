@@ -1,23 +1,18 @@
-﻿import {createStore} from 'redux';
-import {combineReducers} from 'redux';
-import {channelsReducer} from './channels/channelsReducer';
-import createSagaMiddleware from 'redux-saga'
-import {all} from 'redux-saga/effects'
-import {applyMiddleware} from 'redux';
-import {channelsWatcher} from './channels/channelSaga';
+﻿import {channelsReducer} from './channels/channelsReducer';
+import {configureStore} from '@reduxjs/toolkit';
+import {appReducer} from './app/appReducer';
 
-const sagaMiddleware = createSagaMiddleware()
-
-const rootReducer = combineReducers({
-    channels: channelsReducer
-})
-
-export type RootState = ReturnType<typeof rootReducer>;
-
-export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
-
-function *rootWatcher() {
-    yield all([channelsWatcher()])
+export function setupStore() {
+    return configureStore({
+        reducer: {
+            channels: channelsReducer,
+            app: appReducer,
+        },
+    });
 }
 
-sagaMiddleware.run(rootWatcher)
+export type AppStore = ReturnType<typeof setupStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch']
+
+export const store = setupStore();

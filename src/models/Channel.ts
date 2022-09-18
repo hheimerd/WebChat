@@ -1,8 +1,8 @@
-﻿import {Category} from './Category';
+﻿import type {Chat} from './Chat';
 
 export type Channel = {
     name: string;
     icon: string;
     id: number;
-    categories: Category[];
+    chats: Chat[];
 }

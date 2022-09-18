@@ -3,31 +3,21 @@ import bellIcon from './Bell.svg';
 import chatIcon from './Chat.svg';
 import mailIcon from './Mail.svg';
 import settingIcon from './Setting.svg';
-import {useState} from 'react';
-import type {DOMAttributes} from 'react';
+import {useAppDispatch} from '../../../hooks/redux';
+import {useAppSelector} from '../../../hooks/redux';
+import {appSlice} from '../../../state/app/appReducer';
+import {ViewType} from '../../../enums/ViewType';
 
-
-export enum ViewType {
-    Feed,
-    Chat,
-    Notifications,
-    Settings,
-}
-
-type TopActionsProps = {
-    onSelectActionView(view: ViewType): void
-}
-
-export function ViewTypeSelector({onSelectActionView, ...other}: TopActionsProps & DOMAttributes<HTMLDivElement>) {
-    const [activeViewType, setActiveViewType] = useState(ViewType.Feed);
+export function ViewTypeSelector() {
+    const dispatch = useAppDispatch();
+    const activeViewType = useAppSelector(state => state.app.viewType)
 
     function selectAction(actionMenu: ViewType) {
-        setActiveViewType(actionMenu);
-        onSelectActionView(actionMenu);
+        dispatch(appSlice.actions.setViewType({viewType: actionMenu}))
     }
 
     return (
-        <Wrapper {...other}>
+        <Wrapper>
             <ActionButton onClick={() => selectAction(ViewType.Feed)} active={activeViewType === ViewType.Feed}>
                 <img src={mailIcon}/>
             </ActionButton>

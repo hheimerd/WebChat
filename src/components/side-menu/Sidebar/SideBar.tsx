@@ -2,19 +2,17 @@
 import {Logo} from '../../shared/Logo';
 import {styles} from '../../../styles/mixins';
 import type {Channel} from '../../../models/Channel';
-import {useState} from 'react';
 import addIcon from './add-group.png';
 
 type SidebarProps = {
     channels: Channel[],
-    onSelectChannel: (channel: Channel) => void;
+    onSelectChannel: (channel: Channel) => void,
+    selectedChannel: Channel | null
 }
 
-export function SideBar({channels, onSelectChannel}: SidebarProps) {
-    const [selectedChannel, setSelectedChannel] = useState(channels[0]);
+export function SideBar({channels, selectedChannel, onSelectChannel}: SidebarProps) {
 
     function selectChannel(channel: Channel) {
-        setSelectedChannel(channel);
         onSelectChannel(channel);
     }
 

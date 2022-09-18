@@ -10,15 +10,11 @@ import {Inspector} from './components/right-side/Inspector/Inspector';
 import styled from 'styled-components';
 import {GridArea} from './components/GridArea';
 import {ViewTypeSelector} from './components/right-side/TopActions/ViewTypeSelector';
-import {ViewType} from './components/right-side/TopActions/ViewTypeSelector';
 import {useMouse} from './hooks/useMouse';
-import type {Channel} from './models/Channel';
-import type {Category} from './models/Category';
-import type {ChannelRepository} from './repositories/ChannelRepository';
-import {MockChannelRepository} from './repositories/ChannelRepository/MockChannelRepository';
-import {useDispatch} from 'react-redux';
-import {fetchChannelsAction} from './state/channels/channelActions';
-import {useSelector} from './hooks/useSelector';
+import type {Chat} from './models/Chat';
+import {useAppSelector} from './hooks/redux';
+import {useAppDispatch} from './hooks/redux';
+import {fetchChannels} from './state/channels/actionCreators';
 
 const AppWrapper = styled.div`
   display: grid;
@@ -41,39 +37,22 @@ const AppWrapper = styled.div`
   transform: translate3d(0, 0, 0);
 `;
 
-const MouseFollower = styled.div`
-  position: absolute;
-
-  height: 100px;
-  width: 100px;
-  transform: translate(-50px, -50px);
-
-  background: white;
-  border-radius: 100%;
-`;
-
 function App() {
     const [theme, setTheme] = useState(themes.dark);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const channels = useSelector(state => state.channels.channels)
-    console.log(channels);
-    const [selectedChannel, setSelectedChannel] = useState<Channel | null>(channels[0] ?? null);
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(selectedChannel?.categories?.[0] ?? null);
-    const [viewType, setViewType] = useState(ViewType.Feed);
-    const dispatch = useDispatch()
+    const channels = useAppSelector(state => state.channels.channels);
+    const selectedChannel = useAppSelector(state => state.channels.selectedChannel);
+
+    const [selectedChat, setSelectedChat] = useState<Chat | null>(selectedChannel?.chats?.[0] ?? null);
+    const dispatch = useAppDispatch();
     //
     useEffect(() => {
-        dispatch(fetchChannelsAction())
+        dispatch(fetchChannels());
     }, []);
 
     useEffect(() => {
-        setSelectedChannel(channels[0] ?? null);
-    }, [channels])
-
-
-    useEffect(() => {
-        setSelectedCategory(selectedChannel?.categories[0] ?? null);
+        setSelectedChat(selectedChannel?.chats[0] ?? null);
     }, [selectedChannel]);
 
 
@@ -87,30 +66,28 @@ function App() {
 
 
     return (
-            <ThemeContext.Provider value={{styles: theme, toggleStyle}}>
+        <ThemeContext.Provider value={{styles: theme, toggleStyle}}>
 
-                <AppWrapper className={theme.bodyClassName} ref={wrapperRef}>
-                    <GridArea area={'side-menu'}>
-                        <SideMenu channels={channels}
-                                  onChangeCategory={setSelectedCategory} onChangeChannel={setSelectedChannel}
-                                  currentCategory={selectedCategory} currentChannel={selectedChannel}/>
-                    </GridArea>
-                    <GridArea area={'main-content'}>
-                        <MainContent/>
-                    </GridArea>
-                    <GridArea area={'search'}>
-                        <Search/>
-                    </GridArea>
-                    <GridArea area={'inspector'}>
-                        <Inspector/>
-                    </GridArea>
-                    <GridArea area={'top-actions'}>
-                        <ViewTypeSelector onSelectActionView={setViewType}/>
-                    </GridArea>
-                </AppWrapper>
+            <AppWrapper className={theme.bodyClassName} ref={wrapperRef}>
+                <GridArea area={'side-menu'}>
+                    <SideMenu />
+                </GridArea>
+                <GridArea area={'main-content'}>
+                    <MainContent/>
+                </GridArea>
+                <GridArea area={'search'}>
+                    <Search/>
+                </GridArea>
+                <GridArea area={'inspector'}>
+                    <Inspector/>
+                </GridArea>
+                <GridArea area={'top-actions'}>
+                    <ViewTypeSelector/>
+                </GridArea>
+            </AppWrapper>
 
 
-            </ThemeContext.Provider>
+        </ThemeContext.Provider>
     );
 }
 

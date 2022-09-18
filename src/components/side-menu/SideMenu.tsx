@@ -1,37 +1,40 @@
 ﻿import {SideBar} from './Sidebar/SideBar';
-import {Categories} from './Categories';
+import {Chats} from './Chats';
 import {UserShortcutSettings} from './UserShortcutSettings/UserShortcutSettings';
 import React from 'react';
 import styled from 'styled-components';
 import {GridArea} from '../GridArea';
-import type {Category} from '../../models/Category';
-import type {Channel} from '../../models/Channel';
 import {styles} from '../../styles/mixins';
+import {useAppDispatch} from '../../hooks/redux';
+import {useAppSelector} from '../../hooks/redux';
+import {channelsSlice} from '../../state/channels/channelsReducer';
+import type {Chat} from '../../models/Chat';
+import type {Channel} from '../../models/Channel';
 
-type SideMenuProps = {
-    onChangeCategory(category: Category): void;
-    currentCategory: Category | null;
-    onChangeChannel(channel: Channel): void;
-    currentChannel: Channel | null;
-    channels: Channel[];
-}
+export function SideMenu() {
 
-export function SideMenu({
-                             channels,
-                             onChangeCategory,
-                             currentCategory,
-                             onChangeChannel,
-                             currentChannel,
-                         }: SideMenuProps) {
+    const dispatch = useAppDispatch();
+    const channels = useAppSelector(state => state.channels.channels);
+    const currentChannel = useAppSelector(state => state.channels.selectedChannel);
+    const currentChat = useAppSelector(state => state.channels.selectedChat)
+    const chats = useAppSelector(state => state.channels.selectedChannel?.chats)
+
+    function onChangeChannel(channel: Channel) {
+        dispatch(channelsSlice.actions.selectChannel({channel}))
+    }
+
+    function onChangeChat(chat: Chat) {
+        dispatch(channelsSlice.actions.selectChat({chat}))
+    }
 
     return (
         <SideMenuWrapper>
             <GridArea area={'side-bar'}>
-                <SideBar channels={channels} onSelectChannel={onChangeChannel}/>
+                <SideBar selectedChannel={currentChannel} channels={channels} onSelectChannel={onChangeChannel}/>
             </GridArea>
             <GridArea area={'categories'}>
-                <Categories categories={currentChannel?.categories ?? []} selectedCategory={currentCategory}
-                            onSelect={onChangeCategory}/>
+                <Chats chats={chats ?? []} selectedChat={currentChat}
+                       onSelect={onChangeChat}/>
             </GridArea>
             <GridArea area={'category'}>
                 <SelectedCategoryHead>

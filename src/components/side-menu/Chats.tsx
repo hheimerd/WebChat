@@ -1,30 +1,30 @@
 ﻿import styled from 'styled-components';
-import type {Category} from '../../models/Category';
+import type {Chat} from '../../models/Chat';
 import {styles} from '../../styles/mixins';
 
 
 export type CategoriesProps = {
-    categories: Category[],
-    onSelect(category: Category): void,
-    selectedCategory: Category | null
+    chats: Chat[],
+    onSelect(category: Chat): void,
+    selectedChat: Chat | null
 }
 
-export function Categories({categories, selectedCategory, onSelect}: CategoriesProps) {
+export function Chats({chats, selectedChat, onSelect}: CategoriesProps) {
     return (
         <Wrapper>
 
-            {selectedCategory && <CategoryItemSelection
-                style={{transform: `translateY(${40 * categories.indexOf(selectedCategory)}px)`}}/>}
+            {selectedChat && <CategoryItemSelection
+                style={{transform: `translateY(${40 * chats.indexOf(selectedChat)}px)`}}/>}
 
             {
-                categories.map(category => (
+                chats.map(chat => (
                     <CategoryItem
-                        key={category.id}
-                        onClick={() => onSelect(category)}
+                        key={chat.id}
+                        onClick={() => onSelect(chat)}
                     >
-                        <CategoryItemIco src={category.icon}/>
+                        <CategoryItemIco src={chat.icon}/>
                         <CategoryItemName>
-                            {category.name}
+                            {chat.name}
                         </CategoryItemName>
                     </CategoryItem>
                 ))
