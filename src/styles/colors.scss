@@ -1,0 +1,21 @@
+﻿.theme-light {
+  --text-color-rgb: #626262;
+  --background-color: white;
+
+}
+
+.theme-dark {
+  --text-color-rgb: 255, 255, 255;
+  --text-color: rgb(255, 255, 255);
+  --background-200-rgb: 56, 58, 87;
+  --background-200: rgb(56, 58, 87);
+  --background-300-rgb: 44, 47, 72;
+  --background-300: rgb(44, 47, 72);
+  --background-400-rgb: 29, 32, 62;
+  --background-400: rgb(29, 32, 62);
+  --background-500-rgb: 16, 32, 62;
+  --background-500: rgb(16, 32, 62);
+  --divider-color: rgba(255, 255, 255, 0.1);
+  --primary: #e270ff;
+  --secondary: #04ff00;
+}
