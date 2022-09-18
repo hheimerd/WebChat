@@ -1,5 +1,4 @@
 ﻿import styled from 'styled-components';
-import {css} from 'styled-components';
 import {Logo} from '../../shared/Logo';
 import {styles} from '../../../styles/mixins';
 import type {Channel} from '../../../models/Channel';

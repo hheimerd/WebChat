@@ -2,5 +2,5 @@
 
 
 export interface ChannelRepository {
-    getChannels(): Channel[];
+    getChannels(): Promise<Channel[]>;
 }

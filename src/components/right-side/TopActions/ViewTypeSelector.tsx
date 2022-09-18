@@ -4,7 +4,7 @@ import chatIcon from './Chat.svg';
 import mailIcon from './Mail.svg';
 import settingIcon from './Setting.svg';
 import {useState} from 'react';
-import {DOMAttributes} from 'react';
+import type {DOMAttributes} from 'react';
 
 
 export enum ViewType {

@@ -3,8 +3,8 @@ import type {Channel} from '../../models/Channel';
 import type {Category} from '../../models/Category';
 
 export class MockChannelRepository implements ChannelRepository {
-    getChannels(): Channel[] {
-        return channels;
+    getChannels(): Promise<Channel[]> {
+        return Promise.resolve(channels);
     }
 }
 

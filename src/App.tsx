@@ -16,6 +16,9 @@ import type {Channel} from './models/Channel';
 import type {Category} from './models/Category';
 import type {ChannelRepository} from './repositories/ChannelRepository';
 import {MockChannelRepository} from './repositories/ChannelRepository/MockChannelRepository';
+import {useDispatch} from 'react-redux';
+import {fetchChannelsAction} from './state/channels/channelActions';
+import {useSelector} from './hooks/useSelector';
 
 const AppWrapper = styled.div`
   display: grid;
@@ -53,14 +56,15 @@ function App() {
     const [theme, setTheme] = useState(themes.dark);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const [channels, setChannels] = useState<Channel[]>([]);
+    const channels = useSelector(state => state.channels.channels)
+    console.log(channels);
     const [selectedChannel, setSelectedChannel] = useState<Channel | null>(channels[0] ?? null);
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(selectedChannel?.categories?.[0] ?? null);
     const [viewType, setViewType] = useState(ViewType.Feed);
-
+    const dispatch = useDispatch()
+    //
     useEffect(() => {
-        const channelsRepository: ChannelRepository = new MockChannelRepository();
-        setChannels(channelsRepository.getChannels());
+        dispatch(fetchChannelsAction())
     }, []);
 
     useEffect(() => {
@@ -83,30 +87,30 @@ function App() {
 
 
     return (
-        <ThemeContext.Provider value={{styles: theme, toggleStyle}}>
+            <ThemeContext.Provider value={{styles: theme, toggleStyle}}>
 
-            <AppWrapper className={theme.bodyClassName} ref={wrapperRef}>
-                <GridArea area={'side-menu'}>
-                    <SideMenu channels={channels}
-                              onChangeCategory={setSelectedCategory} onChangeChannel={setSelectedChannel}
-                              currentCategory={selectedCategory} currentChannel={selectedChannel}/>
-                </GridArea>
-                <GridArea area={'main-content'}>
-                    <MainContent/>
-                </GridArea>
-                <GridArea area={'search'}>
-                    <Search/>
-                </GridArea>
-                <GridArea area={'inspector'}>
-                    <Inspector/>
-                </GridArea>
-                <GridArea area={'top-actions'}>
-                    <ViewTypeSelector onSelectActionView={setViewType}/>
-                </GridArea>
-            </AppWrapper>
+                <AppWrapper className={theme.bodyClassName} ref={wrapperRef}>
+                    <GridArea area={'side-menu'}>
+                        <SideMenu channels={channels}
+                                  onChangeCategory={setSelectedCategory} onChangeChannel={setSelectedChannel}
+                                  currentCategory={selectedCategory} currentChannel={selectedChannel}/>
+                    </GridArea>
+                    <GridArea area={'main-content'}>
+                        <MainContent/>
+                    </GridArea>
+                    <GridArea area={'search'}>
+                        <Search/>
+                    </GridArea>
+                    <GridArea area={'inspector'}>
+                        <Inspector/>
+                    </GridArea>
+                    <GridArea area={'top-actions'}>
+                        <ViewTypeSelector onSelectActionView={setViewType}/>
+                    </GridArea>
+                </AppWrapper>
 
 
-        </ThemeContext.Provider>
+            </ThemeContext.Provider>
     );
 }
 

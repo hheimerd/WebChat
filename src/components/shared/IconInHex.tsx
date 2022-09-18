@@ -1,6 +1,6 @@
 ﻿import styled from 'styled-components';
 import {hexagonClip} from '../../styles/shapes';
-import {HTMLAttributes} from 'react';
+import type {HTMLAttributes} from 'react';
 
 
 const HexagonWrapper = styled.div`
