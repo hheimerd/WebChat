@@ -1,8 +1,6 @@
 ﻿import styled from 'styled-components';
-import {useContext} from 'react';
 import {useState} from 'react';
 import {useRef} from 'react';
-import {UserContext} from '../../../context/UserContext';
 import {styles} from '../../../styles/mixins';
 import {AvatarImage} from '../../shared/AvatarImage';
 import {IconInHex} from '../../shared/IconInHex';
@@ -11,6 +9,7 @@ import {MicSettings} from './MicSettings';
 import micImg from './mic.svg';
 import headphonesImg from './headphones.svg';
 import addUserImg from './addUser.svg';
+import {useAppSelector} from '../../../hooks/redux';
 
 enum UserShortcutMenu {
     None,
@@ -23,14 +22,13 @@ enum UserShortcutMenu {
 export function UserShortcutSettings() {
     const [activeButton, setActiveButton] = useState(UserShortcutMenu.None);
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const user = useContext(UserContext);
+    const user = useAppSelector(state => state.user.user);
 
     useEventListener('mousedown', (e) => {
         if (wrapperRef.current?.contains(e.target as Node))
             return;
         setActiveButton(UserShortcutMenu.None);
     });
-
 
     return (
         <Wrapper ref={wrapperRef}>
@@ -41,10 +39,15 @@ export function UserShortcutSettings() {
             </SettingWrapper>
 
             <UserWrapper>
-                <AvatarImage src={user.avatar} size={32}/>
-                <NickName>
-                    {user.nickname}
-                </NickName>
+                {
+                    user &&
+                    <>
+                        <AvatarImage src={user.avatar} size={32}/>
+                        <NickName>
+                            {user.nickname}
+                        </NickName>
+                    </>
+                }
             </UserWrapper>
 
             <ButtonsWrapper>
@@ -95,7 +98,7 @@ const SettingWrapper = styled.div`
   width: 100%;
 
   background: rgba(var(--background-500-rgb), 0.5);
-  
+
   &::-webkit-scrollbar {
     width: 0px;
   }
