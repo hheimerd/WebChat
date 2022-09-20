@@ -8,6 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import {store} from './state';
+import './translation/i18n';
 
 
 const root = ReactDOM.createRoot(

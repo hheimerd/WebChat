@@ -3,18 +3,15 @@ import {Logo} from '../../shared/Logo';
 import {styles} from '../../../styles/mixins';
 import type {Channel} from '../../../models/Channel';
 import addIcon from './add-group.png';
+import messagesIcon from './messages.png';
 
 type SidebarProps = {
     channels: Channel[],
-    onSelectChannel: (channel: Channel) => void,
+    onSelectChannel: (channel: Channel | null) => void,
     selectedChannel: Channel | null
 }
 
 export function SideBar({channels, selectedChannel, onSelectChannel}: SidebarProps) {
-
-    function selectChannel(channel: Channel) {
-        onSelectChannel(channel);
-    }
 
     return (
         <Wrapper>
@@ -31,19 +28,24 @@ export function SideBar({channels, selectedChannel, onSelectChannel}: SidebarPro
                     {ChannelsBarSvg}
                 </ChannelsBarFigure>
                 <ChannelsWrapper>
+                    <ChannelSelectorItem selected={selectedChannel === null}>
+                        <ChannelIcon title={'Messages'} src={messagesIcon} onClick={() => onSelectChannel(null)}/>
+                        <SelectionIndicator />
+                    </ChannelSelectorItem>
+
+                    <HorizontalDivider/>
+
                     {
                         channels.map(channel => (
                             <ChannelSelectorItem key={channel.id} selected={channel === selectedChannel}>
                                 <ChannelIcon title={channel.name} src={channel.icon}
-                                             onClick={() => selectChannel(channel)}/>
+                                             onClick={() => onSelectChannel(channel)}/>
                                 <SelectionIndicator />
                             </ChannelSelectorItem>
-
                         ))
                     }
+
                     <ChannelIcon src={addIcon}/>
-
-
                 </ChannelsWrapper>
                 <ChannelsBarFigure style={{transform: 'scaleY(-1)'}}>
                     {ChannelsBarSvg}
@@ -62,6 +64,13 @@ const ChannelIcon = styled.img`
   height: 40px;
   width: 40px;
 `;
+
+const HorizontalDivider = styled.div`
+  height: 2px;
+  border-radius: 10px;
+  background: rgba(var(--text-color-rgb), 0.6);
+  width: 2.5rem;
+`
 
 const SelectionIndicator = styled.div`
   position: absolute;
@@ -97,7 +106,7 @@ const ChannelsWrapper = styled.div`
   position: relative;
   ${styles.centredColumn};
 
-  gap: 1.5rem;
+  gap: 1rem;
 
   margin-left: 1px;
   width: 67px;

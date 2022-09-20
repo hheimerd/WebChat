@@ -5,6 +5,7 @@ import {fetchChannels} from './actionCreators';
 import type {Chat} from '../../models/Chat';
 import {log} from 'util';
 import {current} from '@reduxjs/toolkit';
+import {stat} from 'fs';
 
 type ChannelState = {
     channels: Channel[];
@@ -27,8 +28,15 @@ export const channelsSlice = createSlice({
     initialState,
     name: 'channels',
     reducers: {
-        selectChannel(state, action: PayloadAction<{ channel: Channel }>) {
+        selectChannel(state, action: PayloadAction<{ channel: Channel | null }>) {
+            if (action.payload.channel === null) {
+                state.selectedChat = null;
+                state.selectedChannel = null;
+                return;
+            }
+
             if (!current(state).channels.includes(action.payload.channel)) return;
+
             state.selectedChannel = action.payload.channel;
             state.selectedChat = state.selectedChannel.chats[0];
         },
@@ -43,10 +51,6 @@ export const channelsSlice = createSlice({
                 return;
             state.isLoading = false;
             state.channels = action.payload.channels;
-
-            state.selectedChannel = action.payload.channels[0];
-            state.selectedChat = state.selectedChannel.chats[0] ?? null;
-
         },
         [fetchChannels.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;

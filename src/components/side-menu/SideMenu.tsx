@@ -10,8 +10,10 @@ import {useAppSelector} from '../../hooks/redux';
 import {channelsSlice} from '../../state/channels/channelsReducer';
 import type {Chat} from '../../models/Chat';
 import type {Channel} from '../../models/Channel';
+import {useAppTranslation} from '../../hooks/useAppTranslation';
 
 export function SideMenu() {
+    const { t } = useAppTranslation();
 
     const dispatch = useAppDispatch();
     const channels = useAppSelector(state => state.channels.channels);
@@ -19,7 +21,7 @@ export function SideMenu() {
     const currentChat = useAppSelector(state => state.channels.selectedChat)
     const chats = useAppSelector(state => state.channels.selectedChannel?.chats)
 
-    function onChangeChannel(channel: Channel) {
+    function onChangeChannel(channel: Channel | null) {
         dispatch(channelsSlice.actions.selectChannel({channel}))
     }
 
@@ -38,12 +40,12 @@ export function SideMenu() {
             </GridArea>
             <GridArea area={'category'}>
                 <SelectedCategoryHead>
-                    {currentChannel?.name}
+                    {currentChannel?.name || t('sidebar.messages_title')}
                 </SelectedCategoryHead>
             </GridArea>
-            <UserShortcutSettingsWrapper>
+            <GridArea area={'userSettings'}>
                 <UserShortcutSettings/>
-            </UserShortcutSettingsWrapper>
+            </GridArea>
         </SideMenuWrapper>
     );
 }
@@ -55,18 +57,13 @@ const SideMenuWrapper = styled.div`
   grid-template-rows: 44px 1fr;
   grid-template-areas: 
           "side-bar category"
-          "side-bar categories";
+          "side-bar categories"
+          "userSettings userSettings";
 
   height: 100%;
   width: 320px;
 
   position: relative;
-`;
-
-const UserShortcutSettingsWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 `;
 
 const SelectedCategoryHead = styled.div`

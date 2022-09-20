@@ -18,7 +18,7 @@ export function Chats({chats, selectedChat, onSelect}: CategoriesProps) {
 
             {
                 chats.map(chat => (
-                    <CategoryItem
+                    <ChatItem
                         key={chat.id}
                         onClick={() => onSelect(chat)}
                     >
@@ -26,7 +26,7 @@ export function Chats({chats, selectedChat, onSelect}: CategoriesProps) {
                         <CategoryItemName>
                             {chat.name}
                         </CategoryItemName>
-                    </CategoryItem>
+                    </ChatItem>
                 ))
             }
 
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 
-const CategoryItem = styled.div`
+const ChatItem = styled.div`
   & * {
     z-index: 20;
   }
