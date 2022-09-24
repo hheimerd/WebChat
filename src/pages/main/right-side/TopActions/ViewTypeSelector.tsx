@@ -3,10 +3,10 @@ import bellIcon from './Bell.svg';
 import chatIcon from './Chat.svg';
 import mailIcon from './Mail.svg';
 import settingIcon from './Setting.svg';
-import {useAppDispatch} from '../../../hooks/redux';
-import {useAppSelector} from '../../../hooks/redux';
-import {appSlice} from '../../../state/app/appReducer';
-import {ViewType} from '../../../enums/ViewType';
+import {useAppDispatch} from '../../../../hooks/redux';
+import {useAppSelector} from '../../../../hooks/redux';
+import {appSlice} from '../../../../state/app/appReducer';
+import {ViewType} from '../../../../enums/ViewType';
 
 export function ViewTypeSelector() {
     const dispatch = useAppDispatch();

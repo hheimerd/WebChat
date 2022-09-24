@@ -3,4 +3,5 @@
     nickname: string;
     surname: string,
     name: string,
+    id: string
 }

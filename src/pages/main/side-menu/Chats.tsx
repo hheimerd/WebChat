@@ -1,6 +1,7 @@
 ﻿import styled from 'styled-components';
-import type {Chat} from '../../models/Chat';
-import {styles} from '../../styles/mixins';
+import type {Chat} from '../../../models/Chat';
+import {styles} from '../../../styles/mixins';
+import messagesIcon from './Sidebar/messages.png'
 
 
 export type CategoriesProps = {
@@ -22,7 +23,7 @@ export function Chats({chats, selectedChat, onSelect}: CategoriesProps) {
                         key={chat.id}
                         onClick={() => onSelect(chat)}
                     >
-                        <CategoryItemIco src={chat.icon}/>
+                        <CategoryItemIco src={messagesIcon}/>
                         <CategoryItemName>
                             {chat.name}
                         </CategoryItemName>

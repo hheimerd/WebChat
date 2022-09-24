@@ -3,14 +3,14 @@ import {Chats} from './Chats';
 import {UserShortcutSettings} from './UserShortcutSettings/UserShortcutSettings';
 import React from 'react';
 import styled from 'styled-components';
-import {GridArea} from '../GridArea';
-import {styles} from '../../styles/mixins';
-import {useAppDispatch} from '../../hooks/redux';
-import {useAppSelector} from '../../hooks/redux';
-import {channelsSlice} from '../../state/channels/channelsReducer';
-import type {Chat} from '../../models/Chat';
-import type {Channel} from '../../models/Channel';
-import {useAppTranslation} from '../../hooks/useAppTranslation';
+import {GridArea} from '../../../components/GridArea';
+import {styles} from '../../../styles/mixins';
+import {useAppDispatch} from '../../../hooks/redux';
+import {useAppSelector} from '../../../hooks/redux';
+import {channelsSlice} from '../../../state/channels/channelsReducer';
+import type {Chat} from '../../../models/Chat';
+import type {Channel} from '../../../models/Channel';
+import {useAppTranslation} from '../../../hooks/useAppTranslation';
 
 export function SideMenu() {
     const { t } = useAppTranslation();

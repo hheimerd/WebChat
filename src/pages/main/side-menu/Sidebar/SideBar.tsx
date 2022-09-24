@@ -1,7 +1,7 @@
 ﻿import styled from 'styled-components';
-import {Logo} from '../../shared/Logo';
-import {styles} from '../../../styles/mixins';
-import type {Channel} from '../../../models/Channel';
+import {Logo} from '../../../../components/shared/Logo';
+import {styles} from '../../../../styles/mixins';
+import type {Channel} from '../../../../models/Channel';
 import addIcon from './add-group.png';
 import messagesIcon from './messages.png';
 

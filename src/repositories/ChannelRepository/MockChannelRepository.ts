@@ -8,41 +8,34 @@ export class MockChannelRepository implements ChannelRepository {
     }
 }
 
-const categories = [
+const chats = [
     {
         name: 'Home',
-        icon: 'assets/icons/categories/Symbol.svg',
-        id: 0,
+        id: '0',
     },
     {
         name: 'Music',
-        icon: 'assets/icons/categories/Symbol-1.svg',
-        id: 1,
+        id: '1',
     },
     {
         name: 'Gaming',
-        icon: 'assets/icons/categories/Symbol-2.svg',
-        id: 2,
+        id: '2',
     },
     {
         name: 'Education',
-        icon: 'assets/icons/categories/Symbol-3.svg',
-        id: 3,
+        id: '3',
     },
     {
         name: 'Science & Tech',
-        icon: 'assets/icons/categories/Symbol-4.svg',
-        id: 4,
+        id: '4',
     },
     {
         name: 'Entertainment',
-        icon: 'assets/icons/categories/Symbol-5.svg',
-        id: 5,
+        id: '5',
     },
     {
         name: 'Student Hubs',
-        icon: 'assets/icons/categories/Symbol-6.svg',
-        id: 6,
+        id: '6',
     },
 ] as Chat[];
 
@@ -51,24 +44,24 @@ const channels: Channel[] = [
         name: 'Science',
         id: 1,
         icon: 'assets/images/channels/Science.png',
-        chats: categories.slice(1, -2),
+        chats: chats.slice(1, -2),
     },
     {
         name: 'Food',
         id: 3,
         icon: 'assets/images/channels/Food.png',
-        chats: categories.slice(2),
+        chats: chats.slice(2),
     },
     {
         name: 'Space',
         id: 2,
         icon: 'assets/images/channels/Space.png',
-        chats: categories.slice(0, -2),
+        chats: chats.slice(0, -2),
     },
     {
         name: 'Explore',
         id: 4,
         icon: 'assets/images/channels/Explore.png',
-        chats: categories,
+        chats: chats,
     },
 ];

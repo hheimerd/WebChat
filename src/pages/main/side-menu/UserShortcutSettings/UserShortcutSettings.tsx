@@ -1,15 +1,15 @@
 ﻿import styled from 'styled-components';
 import {useState} from 'react';
 import {useRef} from 'react';
-import {styles} from '../../../styles/mixins';
-import {AvatarImage} from '../../shared/AvatarImage';
-import {IconInHex} from '../../shared/IconInHex';
-import {useEventListener} from '../../../hooks/useEventListener';
+import {styles} from '../../../../styles/mixins';
+import {AvatarImage} from '../../../../components/shared/AvatarImage';
+import {IconInHex} from '../../../../components/shared/IconInHex';
+import {useEventListener} from '../../../../hooks/useEventListener';
 import {MicSettings} from './MicSettings';
 import micImg from './mic.svg';
 import headphonesImg from './headphones.svg';
 import addUserImg from './addUser.svg';
-import {useAppSelector} from '../../../hooks/redux';
+import {useAppSelector} from '../../../../hooks/redux';
 
 enum UserShortcutMenu {
     None,

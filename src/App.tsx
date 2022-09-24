@@ -1,11 +1,5 @@
 import {useEffect} from 'react';
-import {Search} from './components/Search';
-import {SideMenu} from './components/side-menu/SideMenu';
-import {MainContent} from './components/MainContent';
-import {Inspector} from './components/right-side/Inspector/Inspector';
 import styled from 'styled-components';
-import {GridArea} from './components/GridArea';
-import {ViewTypeSelector} from './components/right-side/TopActions/ViewTypeSelector';
 import {useMouse} from './hooks/useMouse';
 import {useAppSelector} from './hooks/redux';
 import {useAppDispatch} from './hooks/redux';
@@ -14,15 +8,9 @@ import {animated} from 'react-spring';
 import {useSpring} from '@react-spring/web';
 import {Theme} from './enums/Theme';
 import {userActions} from './state/user/userReducer';
+import {MainPage} from './pages/main/MainPage';
 
 const AppWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 320px auto 244px;
-  grid-template-rows: 44px 1fr;
-  grid-template-areas: 
-          "side-menu search top-actions"
-          "side-menu main-content inspector";
-
   border-radius: 16px;
 
   color: var(--text-color);
@@ -42,7 +30,7 @@ function App() {
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(fetchChannels());
-        dispatch(userActions.login())
+        dispatch(userActions.login());
     }, []);
 
     const [appWrapperStyles, appWrapperStylesApi] = useSpring(() => ({
@@ -57,22 +45,9 @@ function App() {
 
 
     return (
-        <AppWrapper as={animated.div} style={appWrapperStyles} className={theme === Theme.Dark ? 'theme-dark' : 'theme-light'}>
-            <GridArea area={'side-menu'}>
-                <SideMenu/>
-            </GridArea>
-            <GridArea area={'main-content'}>
-                <MainContent/>
-            </GridArea>
-            <GridArea area={'search'}>
-                <Search/>
-            </GridArea>
-            <GridArea area={'inspector'}>
-                <Inspector/>
-            </GridArea>
-            <GridArea area={'top-actions'}>
-                <ViewTypeSelector/>
-            </GridArea>
+        <AppWrapper as={animated.div} style={appWrapperStyles}
+                    className={theme === Theme.Dark ? 'theme-dark' : 'theme-light'}>
+            <MainPage/>
         </AppWrapper>
     );
 }
